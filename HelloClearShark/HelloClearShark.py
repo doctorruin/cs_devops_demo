@@ -4,4 +4,5 @@ print("Hello, ClearShark!")
 
 command = "ls"
 
-subprocess.run(command, shell=False)
+if command == "ls":
+    subprocess.run(command, shell=False)
