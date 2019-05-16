@@ -15,5 +15,3 @@ notifications:
       on_failure: always # default: always
 on:
     branch: dev
-
-
