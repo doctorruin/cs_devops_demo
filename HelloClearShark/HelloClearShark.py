@@ -4,4 +4,4 @@ print("Hello, ClearShark!")
 
 command = "ls"
 
-subprocess.call(command, shell=True)
+subprocess.call(command, shell=False)

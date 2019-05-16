@@ -12,7 +12,7 @@ python:
 install:
   - pip3 install -r requirements.txt
 script:
-  - bandit --format json HelloClearShark/HelloClearShark.py
+  - bandit HelloClearShark/HelloClearShark.py
   - python HelloClearShark/HelloClearShark.py
 
 on:
