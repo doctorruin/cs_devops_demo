@@ -9,10 +9,11 @@ matrix:
 python:
   - "3.7"
 install:
-  - pip3 install bandit
+  - pip3 install -r requirements.txt
 script:
-  - python bin/test_app.py -p $splunk_pw
+  - bandit --format json HelloClearShark/HelloClearSha
+    rk.py
 on:
-    branch: master
+    branch: dev
 
 
