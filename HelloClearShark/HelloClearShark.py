@@ -2,7 +2,6 @@ import subprocess
 
 print("Hello, ClearShark!")
 
-command = "ls"
+command = ["ls", "-l"]
 
-if command == "ls":
-    subprocess.run([command], shell=False)
+subprocess.run(command, shell=False)
