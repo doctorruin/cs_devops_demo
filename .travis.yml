@@ -1,3 +1,10 @@
+notifications:
+  email:
+    recipients:
+      - rabeyta@clearshark.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
 dist: xenial   # required for Python >= 3.7
 language: python
 python:
@@ -10,9 +17,3 @@ script:
 
 on:
   branch: dev
-notifications:
-  email:
-    recipients:
-      - rabeyta@clearshark.com
-      on_success: never # default: change
-      on_failure: always # default: always
