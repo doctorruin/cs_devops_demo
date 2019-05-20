@@ -11,9 +11,25 @@ python:
   - "3.7.3"
 install:
   - pip3 install -r requirements.txt
-script:
-  - bandit HelloClearShark/HelloClearShark.py
-  - python HelloClearShark/HelloClearShark.py
 
-on:
-  branch: dev
+
+stages:
+  - unittest
+  - sectest
+  - name: build
+    if: branch = master
+  - name: docktest
+    if: branch = master
+  - name: deploy
+    if: branch = master
+
+jobs:
+  include:
+    - stage: unittest
+      script: python src/test_HelloClearShark.py
+    - stage: sectest
+      script: bandit src/src.py
+
+
+
+

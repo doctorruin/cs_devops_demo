@@ -4,7 +4,7 @@ RUN addgroup -S clearshark && adduser -S doctorruin -G clearshark &&\
     mkdir /app &&\
     chown -R doctorruin:clearshark /app
 
-COPY HelloClearShark/HelloClearShark.py /app
+COPY src/HelloClearShark.py /app
 
 USER doctorruin
 
