@@ -6,7 +6,6 @@ notifications:
     on_failure: always # default: always
 
 dist: xenial   # required for Python >= 3.7
-
 language: python
 
 python:
@@ -27,9 +26,10 @@ jobs:
       script: bandit src/src.py
     - stage: build
       services: docker
+      env: IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       script:
-      - docker build -t "${IMAGE_NAME}:latest" .
-      - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- "${IMAGE_NAME}:latest"
+      - docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .
+      - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- "${IMAGE_NAME}:${IMAGE_TAG}"
       - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
       - docker tag "${IMAGE_NAME}:latest" "${IMAGE_NAME}:${IMAGE_TAG}"
       - docker push "${IMAGE_NAME}:${IMAGE_TAG}"
