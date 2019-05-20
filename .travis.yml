@@ -6,13 +6,20 @@ notifications:
     on_failure: always # default: always
 
 dist: xenial   # required for Python >= 3.7
+
 language: python
+
 python:
   - "3.7.3"
+
+services:
+  - docker
+
 install:
   - pip3 install -r requirements.txt
-
-
+env:
+  - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="1.0"
+  -
 stages:
   - unittest
   - sectest
@@ -29,7 +36,14 @@ jobs:
       script: python src/test_HelloClearShark.py
     - stage: sectest
       script: bandit src/src.py
-
-
+    - stage: build
+      script: docker build -t "${IMAGE_NAME}:latest" .
+    - stage: docktest
+      script: curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- "${IMAGE_NAME}:latest"
+    - stage: deploy
+      script:
+        - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker tag "${IMAGE_NAME}:ci" "${IMAGE_NAME}:${IMAGE_TAG}"
+        - docker push "${IMAGE_NAME}:${IMAGE_TAG}"
 
 
