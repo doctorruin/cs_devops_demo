@@ -11,3 +11,5 @@ USER doctorruin
 WORKDIR /app
 
 CMD ["python", "HelloClearShark.py"]
+
+HEALTHCHECK CMD python HelloClearShark.py || exit 1
