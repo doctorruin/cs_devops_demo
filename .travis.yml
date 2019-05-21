@@ -11,6 +11,8 @@ language: python
 python:
   - "3.7.3"
 
+env: IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
+
 stages:
   - test
   - name: build
@@ -27,7 +29,6 @@ jobs:
       script: bandit src/src.py
     - stage: build
       services: docker
-      env: IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       script:
       - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
       - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- -b .anchore_policy.json -f -d Dockerfile "$IMAGE_NAME:$IMAGE_TAG"
