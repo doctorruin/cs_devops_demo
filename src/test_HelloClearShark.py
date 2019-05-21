@@ -1,5 +1,5 @@
 import unittest
-import HelloClearShark.HelloClearShark as cs
+import HelloClearShark as cs
 
 
 class TestStringMethod(unittest.TestCase):
