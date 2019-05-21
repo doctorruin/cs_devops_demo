@@ -186,7 +186,7 @@
                         },
                         {
                             "name": "value",
-                            "value": "example_trusted_base1,example_trusted_base2"
+                            "value": "python:3.7-alpine"
                         },
                         {
                             "name": "actual_dockerfile_only",

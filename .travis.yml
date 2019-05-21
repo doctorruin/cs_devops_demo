@@ -12,16 +12,16 @@ python:
   - "3.7.3"
 
 stages:
-  - unittest
-  - sectest
+  - test
   - name: build
     if: branch = master
+  - deploy
 
 jobs:
   include:
-    - stage: unittest
+    - stage: test
       script: python src/test_HelloClearShark.py
-    - stage: sectest
+    - stage: test
       install: pip3 install -r requirements.txt
       script: bandit src/src.py
     - stage: build
@@ -30,6 +30,8 @@ jobs:
       script:
       - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
       - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- -b anchore_cis_1.13.0_base.json -f -d Dockerfile "$IMAGE_NAME:$IMAGE_TAG"
+    - stage: deploy
+      script:
       - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
       - docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$IMAGE_TAG"
       - docker push "$IMAGE_NAME:$IMAGE_TAG"
