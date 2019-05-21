@@ -5,7 +5,7 @@ RUN addgroup -S clearshark && adduser -S doctorruin -G clearshark &&\
     chown -R doctorruin:clearshark /app &&\
     for i in `find / -perm +6000`; do chmod a-s $i; done
 
-COPY src/HelloClearShark.py /app
+COPY src/HelloClearShark/HelloClearShark.py /app
 
 USER doctorruin
 
