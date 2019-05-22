@@ -14,20 +14,20 @@ python:
 env: IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
 
 stages:
-  - test
-  - name: build
+  - code_test
+  - name: docker_test
     if: branch = master
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: test
+    - stage: code_test
       script: python src/test_HelloClearShark.py
-    - stage: test
+    - stage: code_test
       install: pip3 install -r requirements.txt
       script: bandit src/src.py
-    - stage: build
+    - stage: docker_test
       services: docker
       script:
       - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
@@ -39,5 +39,3 @@ jobs:
       - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
       - docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$IMAGE_TAG"
       - docker push "$IMAGE_NAME:$IMAGE_TAG"
-
-
