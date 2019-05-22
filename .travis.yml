@@ -11,31 +11,42 @@ language: python
 python:
   - "3.7.3"
 
-env: IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
-
 stages:
-  - code_test
-  - name: docker_test
+  # Always run codetest stage
+  - codetest
+  # Only run these stages on branch = master
+  - name: dockertest
     if: branch = master
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: code_test
-      script: python src/test_HelloClearShark.py
-    - stage: code_test
-      install: pip3 install -r requirements.txt
-      script: bandit src/src.py
-    - stage: docker_test
+    # Python unit test
+    - stage: codetest
+      script:
+        - python src/test_HelloClearShark.py
+    # Python security test
+    - stage: codetest
+      install:
+        - pip3 install -r requirements.txt
+      script:
+        - bandit src/src.py
+    # Docker Security Test
+    - stage: dockertest
+      env:
+        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       services: docker
       script:
-      - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
-      - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- -b .anchore_policy.json -f -d Dockerfile "$IMAGE_NAME:$IMAGE_TAG"
+        - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
+        - curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- -b .anchore_policy.json -f -d Dockerfile "$IMAGE_NAME:$IMAGE_TAG"
+    # Deploy to Docker Hub
     - stage: deploy
+      env:
+        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       services: docker
       script:
-      - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
-      - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-      - docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$IMAGE_TAG"
-      - docker push "$IMAGE_NAME:$IMAGE_TAG"
+        - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
+        - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker tag "$IMAGE_NAME:$IMAGE_TAG"
+        - docker push "$IMAGE_NAME:$IMAGE_TAG"

@@ -1,11 +1,18 @@
 import unittest
-import HelloClearShark as cs
+from HelloClearShark import create_string
 
 
 class TestStringMethod(unittest.TestCase):
+    """
+    Main unittest class
+    """
 
     def test_string(self):
-        cs_str = cs.create_string()
+        """
+        Test Create String fom HelloClearShark
+        :return:
+        """
+        cs_str = create_string()
         self.assertEqual(cs_str, "Hello, ClearShark!")
 
 
