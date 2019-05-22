@@ -1,3 +1,4 @@
+# Email Notifications
 notifications:
   email:
     recipients:
@@ -5,12 +6,19 @@ notifications:
     on_success: never # default: change
     on_failure: always # default: always
 
+# server specifics
 dist: xenial   # required for Python >= 3.7
 language: python
-
 python:
   - "3.7.3"
 
+# safelist
+branches:
+  only:
+  - master
+  - dev
+
+# instantiate stages
 stages:
   # Always run codetest stage
   - codetest
@@ -20,6 +28,7 @@ stages:
   - name: deploy
     if: branch = master
 
+# run jobs[scripts]
 jobs:
   include:
     # Python unit test
@@ -48,5 +57,5 @@ jobs:
       script:
         - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker tag "$IMAGE_NAME:$IMAGE_TAG"
+        - docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$IMAGE_TAG"
         - docker push "$IMAGE_NAME:$IMAGE_TAG"
