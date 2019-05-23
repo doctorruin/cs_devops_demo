@@ -1,6 +1,9 @@
-# DevOps Pipeline Demo
+#  DevOps Pipeline Demo
 
-## Python Code
+##  Python Code
+
 Simple Hello World style script with tests
-## Docker
+
+##  Docker
+
 Simple Secure Docker container that outputs "Hello, CLearShark!" when run
