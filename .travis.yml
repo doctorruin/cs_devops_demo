@@ -52,7 +52,7 @@ jobs:
     # Deploy to Docker Hub
     - stage: deploy
       env:
-        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
+        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="cs_demo"
       services: docker
       script:
         - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
