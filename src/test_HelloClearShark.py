@@ -1,5 +1,5 @@
 import unittest
-from HelloClearShark import create_string
+from HelloClearShark import clearshark_string
 
 
 class TestStringMethod(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestStringMethod(unittest.TestCase):
         Test Create String fom HelloClearShark
         :return:
         """
-        cs_str = create_string()
+        cs_str = clearshark_string()
         self.assertEqual(cs_str, "Hello, ClearShark!")
 
 

@@ -8,12 +8,12 @@ def print_string():
     :return:
     """
 
-    message = create_string()
+    message = clearshark_string()
 
     print(message)
 
 
-def create_string():
+def clearshark_string():
 
     """
     Creates String and returns it
