@@ -44,7 +44,7 @@ jobs:
     # Docker Security Test
     - stage: dockertest
       env:
-        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="cs_demo"
+        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       services: docker
       script:
         - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
@@ -52,7 +52,7 @@ jobs:
     # Deploy to Docker Hub
     - stage: deploy
       env:
-        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="cs_demo"
+        - IMAGE_NAME="doctorruin/cs_devops_demo" IMAGE_TAG="latest"
       services: docker
       script:
         - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
