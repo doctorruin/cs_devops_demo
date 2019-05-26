@@ -29,7 +29,7 @@ def clearshark_string():
     """
 
     # Instantiate string variable
-    message = "Hello, ClearShark!"
+    message = "Hello, ClearShark!!!!!1!!!"
 
     # Returns var message
     return message

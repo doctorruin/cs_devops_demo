@@ -13,7 +13,7 @@ class TestStringMethod(unittest.TestCase):
         :return:
         """
         cs_str = clearshark_string()
-        self.assertEqual(cs_str, "Hello, ClearShark!")
+        self.assertEqual(cs_str, "Hello, ClearShark!!!!!1!!!")
 
 
 if __name__ == '__main__':
